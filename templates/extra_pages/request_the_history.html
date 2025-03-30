@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donor Details</title>
+    <style>
+        body {
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column; /* Added flex-direction column */
+            background-color: #f4f7f9;
+            color: #333;
+            min-height: 100vh; /* Changed to min-height */
+        }
+        header {       
+              background-color:#0d131d;
+                color: white;
+                padding: 10px;
+                display: flex;
+                justify-content: center;
+               text-align: center;
+               gap: 100px;
+               height: 50px;
+        }
+        header h1 {
+            margin: 0;
+            text-align: center;
+        }
+        main {
+            flex-grow: 1;
+            display: flex;
+        }
+        aside {
+          min-width: 200px;
+            background-color: #9f0909;
+            padding: 20px;
+        }
+        aside ul {
+            list-style: none;
+            padding: 0;
+        }
+        aside ul li {
+            margin-bottom: 10px;
+            color: white;
+        }
+        aside ul li a {
+            text-decoration: none;
+            color: white;
+            display: block;
+            padding: 8px 12px;
+            border-radius: 4px;
+        }
+        aside ul li a:hover {
+            background-color: #0f0d0d;
+        }
+        .page-content {
+            flex-grow: 1;
+            padding: 25px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: rgba(255, 255, 255, 0.8); 
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            align-items: left;
+            left:60%;
+        }
+        th, td {
+            border-bottom: 1px solid #eee;
+            padding: 12px 15px;
+            text-align: left;
+        }
+        th {
+            background-color: #e8f0fe;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        #table {
+            display: flex;
+            align-items: center;
+            margin-left: 200px;
+            margin-top: 150px;
+        }
+        .edit-button {
+            background-color: #3c8b3f;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .edit-button:hover {
+            background-color: #185f1b;
+        }
+        .delete-button {
+            background-color: #bd1b0f;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .delete-button:hover {
+            background-color: #9f0909
+        }
+        .simple-header {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .details-header {
+            color: #2c3e50;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        p {
+            color: #555;
+            margin-bottom: 20px;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: auto; /* Footer sticks to bottom */
+        }
+        .logout-button {
+            background-color: #f44336;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            position:absolute;
+            left:90%;
+        }
+        aside h1 {
+            font-weight: bold;
+        }
+        .banner-image {
+            position: relative;
+           display: flex;
+           overflow: hidden;
+           border-radius: 10px;
+            object-fit: hidden;
+
+
+        }
+        .banner-image img{
+            min-width: 1410px;
+            height: 670px;
+        }
+        .banner-image table {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 1000px;
+        }
+        aside h1{
+            font-weight: bold;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>  MY REQUEST HISTORY</h1>
+        <a href="logout.html" class="logout-button">Logout</a>
+    </header>
+    <main>
+        <aside>
+            <br><br><br><br>
+            <ul>
+                <h1>MENU</h1>
+                <li><a href="home.html">Home</a></li>
+                <li onclick="location.href='blood_requests.html'">Request Blood</li>
+                <li onclick="location.href='request_the_history.html'">Request History</li>
+                <li onclick="location.href='help.html'">Help</li>
+            </ul>
+        </aside>
+        <div class="banner-image">
+            <img src="/admin3.jpg"alt srcset="donor page">
+
+            <div id="table">
+                <table id="donor-table">
+                    <thead>
+                        <tr>
+                            <th>NAME</th>
+                            <th>AGE</th>
+                            <th>GENDER</th>
+                            <th>BLOOD GROUP</th>
+                            <th>REQUEST DATE</th>
+                            <th>UNITS REQESTED</th>
+                            <th>HEALTH STATUS</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Michael Ndungu</td><td>30</td><td>Male</td><td>A+</td><td>4</td><td>Good</td><td><button class="edit-button" onclick="editDonation(1)">Edit</button><button class="delete-button" onclick="deleteDonation(1)">Delete</button></td></tr>
+                        <tr><td>Michael Ndungu</td><td>25</td><td>Male</td><td>A+</td><td>3</td><td>Excellent</td><td><button class="edit-button" onclick="editDonation(2)">Edit</button><button class="delete-button" onclick="deleteDonation(2)">Delete</button></td></tr>
+                    
+                    </tbody>
+                </table>
+            </div>
+            <script>
+                function editDonation(index) {
+                    alert('Editing donation at index ${index}');
+                }
+
+                function deleteDonation(index) {
+                    if (confirm('Are you sure you want to delete donation at index ${index}?')) {
+                        const tableBody = document.getElementById("donationTableBody");
+                        tableBody.deleteRow(index);
+                    }
+                }
+            </script>
+        </div>
+    </main>
+    <footer>
+        <b>DONATE BLOOD, TO SAVE LIVES</b>
+    </footer>
+</body>
+</html>

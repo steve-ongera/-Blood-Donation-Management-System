@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block content %}
+    <link rel="stylesheet" href="{% static 'css/detail.css' %}">
+
+
+    <div class="container">
+        <div class="donor-card">
+            <div class="donor-header">
+                {% if donor.profile_picture %}
+                    <img src="{{ donor.profile_picture.url }}" alt="{{ donor.full_name }}" class="donor-profile-img">
+                {% else %}
+                    <img src="{% static 'images/profile.jpg' %}" alt="{{ donor.full_name }}" class="donor-profile-img">
+                {% endif %}
+                <div class="donor-title">
+                    <h2 class="donor-name">{{ donor.full_name }}</h2>
+                    <span class="donor-blood-group">{{ donor.blood_group }}</span>
+                </div>
+            </div>
+            
+            <div class="donor-body">
+                <div class="donor-info">
+                    <div class="info-group">
+                        <span class="info-label">Username</span>
+                        <span class="info-value">{{ donor.username }}</span>
+                    </div>
+                    
+                    <div class="info-group">
+                        <span class="info-label">Date of Birth</span>
+                        <span class="info-value">{{ donor.date_of_birth }}</span>
+                    </div>
+                    
+                    <div class="info-group">
+                        <span class="info-label">Gender</span>
+                        <span class="info-value">{{ donor.gender }}</span>
+                    </div>
+                    
+                    <div class="info-group">
+                        <span class="info-label">Phone Number</span>
+                        <span class="info-value">{{ donor.phone_number }}</span>
+                    </div>
+                    
+                    <div class="info-group">
+                        <span class="info-label">Email</span>
+                        <span class="info-value">{{ donor.email }}</span>
+                    </div>
+                    
+                    <div class="info-group">
+                        <span class="info-label">Address</span>
+                        <span class="info-value">{{ donor.address }}</span>
+                    </div>
+                    
+                    <div class="info-group">
+                        <span class="info-label">City</span>
+                        <span class="info-value">{{ donor.city }}</span>
+                    </div>
+                    
+                    <div class="info-group">
+                        <span class="info-label">State</span>
+                        <span class="info-value">{{ donor.state }}</span>
+                    </div>
+                    
+                    <div class="info-group">
+                        <span class="info-label">Zip Code</span>
+                        <span class="info-value">{{ donor.zip_code }}</span>
+                    </div>
+                    
+                    <div class="info-group">
+                        <span class="info-label">Last Donation</span>
+                        <span class="info-value">{{ donor.last_donation_date|default:"No previous donations" }}</span>
+                    </div>
+                    
+                    <div class="info-group">
+                        <span class="info-label">Availability</span>
+                        {% if donor.is_available %}
+                            <span class="badge badge-available">Available</span>
+                        {% else %}
+                            <span class="badge badge-unavailable">Unavailable</span>
+                        {% endif %}
+                    </div>
+                    
+                    {% if donor.health_report %}
+                    <div class="info-group">
+                        <span class="info-label">Health Report</span>
+                        <a href="{{ donor.health_report.url }}" class="btn btn-outline" download>Download Report</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="donor-actions">
+                <button class="btn btn-outline">Contact</button>
+                <button class="btn btn-secondary">Edit Profile</button>
+                <button class="btn btn-primary">Request Donation</button>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

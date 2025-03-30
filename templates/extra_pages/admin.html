@@ -1,0 +1,159 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+        <style>
+            body {
+                font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+                background-color:#f4f7f9 ;  
+        
+            }
+            header {
+                background-color:#0d131d;
+                color: white;
+                padding: 10px;
+                display: flex;
+                justify-content: center;
+               text-align: center;
+               gap: 100px;
+               height: 50px;
+            }
+            header h1 {
+                margin: 0;
+            }
+            main {
+                flex-grow: 1;
+                display: flex;
+            }
+            aside h2{
+           color: white;
+           font-weight: bold;
+            }
+            aside {
+                min-width: 200px;
+                background-color:#9f0909;
+                padding: 20px;
+            }
+            aside ul {
+                list-style: none;
+                padding: 0;
+            }
+            aside ul li {
+                margin-bottom: 10px;
+            }
+            aside ul li a {
+                text-decoration: none;
+                color: white;
+                display: block; /* Make links fill the entire list item */
+                padding: 8px 12px; /* Add some padding for better click area */
+                border-radius: 4px; /* Optional: Add rounded corners */
+            }
+            aside ul li a:hover {
+                
+                background-color: #0f0d0d; /* Optional: Add hover effect */
+            }
+            .content {
+                flex-grow: 1;
+                padding: 20px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+            }
+            .content-inner {
+                max-width: 600px;
+            }
+            footer {
+                background-color:#0d131d;
+                color: white;
+                text-align: center;
+                padding: 10px;
+                
+            }
+            .logout-button {
+                background-color: #9f0909;
+                color: white;
+                padding: 10px 15px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                text-decoration: none;
+                position:absolute;
+                left:90%;
+            }
+            .banner img{
+           width:1410px;
+           max-height:635px;
+           display: flex;
+           overflow: hidden;
+           border-radius: 10px;
+            object-fit: hidden;
+            }
+            .banner-text{
+           
+    position: absolute;
+    top: 50%;
+    left:60%;
+    transform: translate(-50%,-50%);
+    opacity: 0.5;
+    background: rgb(46, 43, 43);
+    color: white;
+    padding: 20px 30px;
+    font-size: 28px;
+    font-weight: bold;
+    border-radius: 10px;
+    margin-left: auto;
+            }
+
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1>ADMIN DASHBOARD</h1>
+            <a href="#" class="logout-button">Logout</a>
+        </header>
+        <main>
+            <aside>
+                <br><br>
+                <h2>MENU</h2>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Donors</a></li>
+                    <li><a href="#">Recipients</a></li>
+                    <li><a href="#">Donations</a></li>
+                    <li><a href="#">Blood Requests</a></li>
+                    <li><a href="#">Blood Stock</a></li>
+                    <li><a href="#">Help</a></li>
+
+                </ul>
+            </aside>
+            <section class="banner">
+                <img src="/admin3.jpg" alt="Home page image">
+                <div class="banner-text">
+                    <h1>Welcome,Administrator!
+                       <br>Use the menu to navigate.
+                    </h1>
+                </div>
+            </section>
+
+            <div class="content">
+                <div class="content-inner">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
+        </main>
+        <footer>
+            <p>&copy; 2025 Blood Bank Management System</p>
+        </footer>
+    </body>
+</html>

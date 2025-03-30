@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help - Blood Donation Institution</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #c5cedbe3;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #9f0909;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        main {
+            flex-grow: 1;
+            padding: 20px;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #d32f2f;
+            margin-bottom: 20px;
+        }
+
+        p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .contact-info {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .contact-info p {
+            margin: 5px 0;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-top: 10px;
+        }
+
+        input, textarea {
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #d32f2f;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #b71c1c;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Help - Blood Donation Institution</h1>
+    </header>
+    <main>
+        <h2>Need Help?</h2>
+        <p>
+            We understand that you may have questions or encounter issues. Please review the information below. If your problems persist, please do not hesitate to contact us.
+        </p>
+
+        <div class="contact-info">
+            <h3>Contact Information</h3>
+            <p><strong>Location:</strong> 123 Blood Donation Street, Cityville, Country</p>
+            <p><strong>Email:</strong> info@blooddonation.org</p>
+            <p><strong>Phone:</strong> +1 (555) 123-4567</p>
+        </div>
+
+        <p>
+            When shadows lengthen, and doubts take flight,
+            And digital pathways dim in fading light,
+            Let not your worries linger, nor despair,
+            But seek our aid, a beacon shining fair.
+            If pixels falter, or screens grow dim,
+            Our doors stand open, where warm hearts brim.
+            At 123 Blood Donation Street, our hands await,
+            Or send your queries through the digital gate,
+            To info@blooddonation.org, where words align,
+            Or call us forth, on the numbered line,
+            At +1 (555) 123-4567, our voices clear,
+            To banish shadows, and quell all fear.
+        </p>
+
+        <h2>Submit a Question</h2>
+        <form id="helpForm">
+            <label for="name">Your Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Your Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="message">Your Message:</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+
+            <button type="submit">Submit</button>
+        </form>
+    </main>
+    <footer>
+        <p>&copy; 2024 Blood Donation Institution. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById('helpForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+            // Collect form data
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            // Simple alert to simulate form submission (replace with actual backend integration)
+            alert(`Thank you, ${name}! Your message has been submitted. We will contact you at ${email} shortly.`);
+
+            // Optionally, clear the form
+            document.getElementById('name').value = '';
+            document.getElementById('email').value = '';
+            document.getElementById('message').value = '';
+        });
+    </script>
+</body>
+</html>

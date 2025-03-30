@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donate Blood</title>
+    <style>
+        body {
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            background-color: #c5cedbe3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .donation-form {
+            background-color: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            width: 600px;
+            max-width: 90%;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            text-align: center;
+        }
+
+        .donation-form h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #d32f2f;
+            text-transform: uppercase;
+        }
+
+        .donation-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            text-align: center;
+        }
+
+        .donation-form input,
+        .donation-form select {
+            width: 60%;
+            margin: 0 auto 15px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .donation-form select {
+            width: 60%;
+        }
+
+        .donation-form button {
+            background-color: #f44336;
+            color: white;
+            padding: 14px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            width: fit-content;
+            margin: 20px auto 0;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .donation-form button:hover {
+            background-color: #d32f2f;
+        }
+
+        .error-message {
+            color: #d32f2f;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="donation-form">
+        <h2>Blood Donation Form</h2>
+        <form id="donateForm">
+            <label for="donor_name">Full Name:</label>
+            <input type="text" id="donor_name" name="donor_name" required>
+
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" min="18" max="65" required>
+
+            <label for="blood_group">Blood Group:</label>
+            <select id="blood_group" name="blood_group" required>
+                <option value="">Select Blood Group</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+            </select>
+
+            <label for="units_donated">Units to Donate:</label>
+            <input type="number" id="units_donated" name="units_donated" min="1" max="4" required>
+
+            <label for="health_status">Health Status:</label>
+            <select name="health_status" id="health_status" required>
+                <option value="">Select Health Status</option>
+                <option value="Excellent">Excellent</option>
+                <option value="Good">Good</option>
+                <option value="Fair">Fair</option>
+                <option value="Poor">Poor</option>
+            </select>
+
+            <label for="donation_date">Donation Date:</label>
+            <input type="date" id="donation_date" name="donation_date" required>
+
+            <div class="error-message" id="errorMessage"></div>
+            <div><button type="button" onclick="validateAndSubmit()">DONATE</button></div>
+        </form>
+    </div>
+
+    <script>
+        function validateAndSubmit() {
+            const donor_name = document.getElementById("donor_name").value;
+            const age = document.getElementById("age").value;
+            const blood_group = document.getElementById("blood_group").value;
+            const units_donated = document.getElementById("units_donated").value;
+            const health_status = document.getElementById("health_status").value;
+            const donation_date = document.getElementById("donation_date").value;
+            const errorMessage = document.getElementById("errorMessage");
+
+            // Reset error message
+            errorMessage.style.display = "none";
+
+            // Validate age
+            if (age < 18 || age > 65) {
+                errorMessage.textContent = "Age must be between 18 and 65 years";
+                errorMessage.style.display = "block";
+                return;
+            }
+
+            // Validate units
+            if (units_donated < 1 || units_donated > 4) {
+                errorMessage.textContent = "Units must be between 1 and 4";
+                errorMessage.style.display = "block";
+                return;
+            }
+
+            // Validate date
+            if (!donation_date) {
+                errorMessage.textContent = "Please select a donation date";
+                errorMessage.style.display = "block";
+                return;
+            }
+
+            // Validate all fields are filled
+            if (!donor_name || !age || !blood_group || !units_donated || !health_status || !donation_date) {
+                errorMessage.textContent = "Please fill in all fields";
+                errorMessage.style.display = "block";
+                return;
+            }
+
+            // Create form data
+            const formData = new FormData();
+            formData.append('donor_name', donor_name);
+            formData.append('age', age);
+            formData.append('blood_group', blood_group);
+            formData.append('units_donated', units_donated);
+            formData.append('health_status', health_status);
+            formData.append('donation_date', donation_date);
+
+            // Submit form data
+            fetch('process_donation.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(data => {
+                        throw new Error(data.message || `HTTP error! status: ${response.status}`);
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    alert(data.message);
+                    document.getElementById("donateForm").reset();
+                } else {
+                    errorMessage.textContent = data.message || 'An error occurred while processing your donation.';
+                    errorMessage.style.display = "block";
+                    console.error('Server error:', data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                errorMessage.textContent = error.message || 'An error occurred while processing your donation. Please try again.';
+                errorMessage.style.display = "block";
+            });
+        }
+    </script>
+</body>
+</html>

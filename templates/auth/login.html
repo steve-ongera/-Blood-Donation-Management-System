@@ -1,0 +1,59 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+<link rel="stylesheet" href="{% static 'css/messages.css' %}">
+<script src="{% static 'js/messages.js' %}"></script>
+
+<!-- Message display section - put this where you want messages to appear -->
+<div class="message-container">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <img src="{% static 'images/logo.jpg' %}" alt="Blood Bank Logo" class="auth-logo" style="border-radius: 50%; width: 120px; height: 120px; object-fit: cover; border: 3px solid #9f0909; padding: 5px;">
+            <h2>Blood Bank Management System</h2>
+            <p>Administrator Login</p>
+        </div>
+
+        <form method="POST" class="auth-form">
+            {% csrf_token %}
+            <div class="form-group">
+                <i class="fas fa-user"></i>
+                <input type="text" name="username" placeholder="Username" required>
+            </div>
+            
+            <div class="form-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" name="password" placeholder="Password" required>
+            </div>
+
+            <div class="form-options">
+                <label class="remember-me">
+                    <input type="checkbox" name="remember"> Remember me
+                </label>
+                <a href="#" class="forgot-password">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="auth-btn">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </button>
+
+            <div class="auth-footer">
+                <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">

@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="report-container">
+    <h2 class="report-title">Monthly Donation Trends</h2>
+    <p class="report-period">
+        From {{ start_date|date:"M d, Y" }} to {{ end_date|date:"M d, Y" }}
+    </p>
+    
+    <div class="chart-container" style="position: relative; height:400px; width:100%">
+        <canvas id="donationTrendsChart"></canvas>
+    </div>
+    
+    <div class="report-summary">
+        <p>Total donations in period: <strong>{{ total_donations }}</strong></p>
+        <p>Average monthly donations: <strong>{{ avg_donations }}</strong></p>
+    </div>
+</div>
+
+<!-- Include Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const ctx = document.getElementById('donationTrendsChart').getContext('2d');
+    const months = JSON.parse('{{ months|escapejs }}');
+    const counts = JSON.parse('{{ counts|escapejs }}');
+    
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: months,
+            datasets: [{
+                label: 'Number of Donations',
+                data: counts,
+                borderColor: 'rgba(231, 76, 60, 1)',
+                backgroundColor: 'rgba(231, 76, 60, 0.1)',
+                borderWidth: 3,
+                tension: 0.3,
+                fill: true,
+                pointBackgroundColor: 'rgba(231, 76, 60, 1)',
+                pointRadius: 4,
+                pointHoverRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                tooltip: {
+                    mode: 'index',
+                    intersect: false
+                },
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Monthly Donation Trends',
+                    font: {
+                        size: 18
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Number of Donations'
+                    },
+                    ticks: {
+                        stepSize: 1
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Month'
+                    },
+                    grid: {
+                        display: false
+                    }
+                }
+            }
+        }
+    });
+});
+</script>
+
+<style>
+.report-container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+.report-title {
+    color: #2c3e50;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+.report-period {
+    color: #7f8c8d;
+    font-style: italic;
+}
+.report-summary {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 5px;
+}
+</style>
+{% endblock %}

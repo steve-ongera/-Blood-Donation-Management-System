@@ -1,0 +1,53 @@
+/* Message/Alerts Styling */
+.message-container {
+    position: fixed;
+    top: 70px;
+    right: 20px;
+    z-index: 1000;
+    max-width: 400px;
+}
+
+.alert {
+    padding: 15px;
+    margin-bottom: 10px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    position: relative;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    animation: slideIn 0.5s forwards;
+}
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.alert-error {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.close {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: inherit;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}

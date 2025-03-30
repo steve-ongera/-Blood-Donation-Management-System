@@ -1,0 +1,166 @@
+/* Sidebar Styles */
+.admin-sidebar {
+    min-width: 250px;
+    background: linear-gradient(to bottom, #9f0909, #7a0707);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-header {
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-header h2 {
+    margin: 0;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sidebar-menu {
+    flex-grow: 1;
+    padding: 15px 0;
+}
+
+.sidebar-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    gap: 12px;
+}
+
+.menu-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.menu-item.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-left: 4px solid white;
+}
+
+.menu-item i {
+    width: 20px;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+.menu-item span {
+    flex-grow: 1;
+}
+
+.badge {
+    background-color: #ff4757;
+    color: white;
+    border-radius: 10px;
+    padding: 2px 8px;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+
+.sidebar-footer {
+    padding: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid white;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.username {
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.role {
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+
+.logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: white;
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding: 8px 15px;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.logout-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .admin-sidebar {
+        min-width: 70px;
+        max-width: 70px;
+    }
+    
+    .menu-item span, 
+    .sidebar-header h2 span,
+    .profile-info,
+    .logout-btn span {
+        display: none;
+    }
+    
+    .sidebar-header {
+        padding: 20px 10px;
+        text-align: center;
+    }
+    
+    .menu-item {
+        justify-content: center;
+        padding: 15px 10px;
+    }
+    
+    .menu-item.active {
+        border-left: none;
+        border-right: 4px solid white;
+    }
+    
+    .user-profile {
+        justify-content: center;
+    }
+    
+    .logout-btn {
+        justify-content: center;
+        padding: 10px;
+    }
+}

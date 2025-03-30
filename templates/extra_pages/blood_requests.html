@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Request</title>
+    <style>
+        body {
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            background-color:#c5cedbe3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .donation-form {
+            background-color: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            width: 600px;
+            max-width: 90%;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            text-align: center;
+        }
+
+        .donation-form h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #d32f2f;
+            text-transform: uppercase;
+        }
+
+        .donation-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            text-align: center;
+        }
+
+        .donation-form input,
+        .donation-form select {
+            width: 60%;
+            margin: 0 auto 15px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .donation-form select {
+            width: 60%;
+        }
+
+        .donation-form select[name="healthStatus"] {
+            width: 60%;
+        }
+
+        .donation-form button {
+            background-color: #f44336;
+            color: white;
+            padding: 14px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            width: fit-content;
+            margin: 20px auto 0;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .donation-form button:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="donation-form">
+        <h2>Blood Request Form</h2>
+        <form id="donateForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" required>
+
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender" required>
+                <option value="">Select</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select>
+
+            <label for="bloodGroup">Blood Group Needed:</label>
+            <select id="bloodGroup" name="bloodGroup" required>
+                <option value="">Select</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+            </select>
+
+            <label for="units">Units (ml):</label>
+            <input type="number" id="units" name="units" required>
+
+            <label for="healthStatus">Health Status:</label>
+            <select name="healthStatus" id="healthStatus">
+                <option value="">Select</option>
+                <option value="Excellent">Excellent</option>
+                <option value="Good">Good</option>
+                <option value="Fair">Fair</option>
+                <option value="Poor">Poor</option>
+            </select>
+
+            <div><button type="button" onclick="validateAndSubmit()">REQUEST</button></div>
+        </form>
+    </div>
+
+    <script>
+        function validateAndSubmit() {
+            const name = document.getElementById("name").value;
+            const age = document.getElementById("age").value;
+            const gender = document.getElementById("gender").value; // Added gender validation
+            const bloodGroup = document.getElementById("bloodGroup").value;
+            const units = document.getElementById("units").value;
+            const healthStatus = document.getElementById("healthStatus").value;
+
+            if (name === "" || age === "" || gender === "" || bloodGroup === "" || units === "" || healthStatus === "") {
+                alert("Please fill all fields.");
+            } else {
+                alert("Request made successfully!");
+                document.getElementById("donateForm").reset();
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<div class="message-container">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+<div class="dashboard-container">
+    <!-- Summary Cards -->
+    <div class="summary-cards">
+        <div class="card">
+            <div class="card-icon donor-icon">
+                <i class="fas fa-users"></i> 
+            </div>
+            <div class="card-info">
+                <h3>{{ donor_count }}</h3>
+                <p>Total Donors</p>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-icon recipient-icon">
+                <i class="fas fa-hospital-user"></i>
+            </div>
+            <div class="card-info">
+                <h3>{{ recipient_count }}</h3>
+                <p>Total Recipients</p>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-icon blood-icon">
+                <i class="fas fa-tint"></i>
+            </div>
+            <div class="card-info">
+                <h3>{{ total_units }}</h3>
+                <p>Blood Units Available</p>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-icon request-icon">
+                <i class="fas fa-hand-holding-medical"></i>
+            </div>
+            <div class="card-info">
+                <h3>{{ pending_requests }}</h3>
+                <p>Pending Requests</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Blood Inventory Chart -->
+    <div class="dashboard-section">
+        <h2><i class="fas fa-chart-pie"></i> Blood Inventory</h2>
+        <div class="inventory-chart">
+            {% for item in blood_inventory %}
+            <div class="blood-group">
+                <div class="blood-info">
+                    <span class="blood-type">{{ item.blood_group }}</span>
+                    <span class="blood-units">{{ item.units_available }} units</span>
+                </div>
+                <div class="blood-bar">
+                    <div class="bar-fill" style="width: {% widthratio item.units_available max_units 100 %}%"></div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Recent Activities -->
+    <div class="dashboard-section">
+        <h2><i class="fas fa-history"></i> Recent Activities</h2>
+        <div class="activities">
+            {% for donation in recent_donations %}
+            <div class="activity-card">
+                <div class="activity-icon">
+                    <i class="fas fa-heartbeat"></i>
+                </div>
+                <div class="activity-details">
+                    <h4>{{ donation.donor.full_name }} donated {{ donation.units_donated }} unit(s) of {{ donation.blood_group }}</h4>
+                    <p>{{ donation.donation_date }}</p>
+                </div>
+            </div>
+            {% endfor %}
+            
+            {% for request in recent_requests %}
+            <div class="activity-card">
+                <div class="activity-icon">
+                    <i class="fas fa-hand-holding-medical"></i>
+                </div>
+                <div class="activity-details">
+                    <h4>{{ request.recipient.full_name }} requested {{ request.units_required }} unit(s) of {{ request.blood_group }}</h4>
+                    <p>{{ request.request_date }} - Status: {{ request.status }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="dashboard-section">
+        <h2><i class="fas fa-rocket"></i> Quick Actions</h2>
+        <div class="quick-actions">
+            <a href="{% url 'donor-add' %}" class="action-btn">
+                <i class="fas fa-user-plus"></i> Add Donor
+            </a>
+            <a href="#" class="action-btn">
+                <i class="fas fa-hospital-user"></i> Add Recipient
+            </a>
+            <a href="#" class="action-btn">
+                <i class="fas fa-list-ul"></i> View Requests
+            </a>
+            <a href="#" class="action-btn">
+                <i class="fas fa-tint"></i> View Inventory
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Font Awesome for icons -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+{% endblock %}

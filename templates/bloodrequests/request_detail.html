@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .detail-container {
+        max-width: 800px;
+        margin: 30px auto;
+        padding: 0 15px;
+    }
+    .header-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    .header-section h2 {
+        color: #9f0909;
+        font-size: 1.8rem;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .back-btn {
+        background-color: #6c757d;
+        color: white;
+        padding: 8px 15px;
+        border-radius: 5px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .detail-card {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        padding: 25px;
+    }
+    .detail-row {
+        display: flex;
+        margin-bottom: 15px;
+    }
+    .detail-label {
+        font-weight: bold;
+        color: #555;
+        min-width: 150px;
+    }
+    .detail-value {
+        flex-grow: 1;
+    }
+    .status-badge {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 12px;
+        font-weight: bold;
+    }
+    .status-pending { background-color: #f39c12; color: white; }
+    .status-approved { background-color: #2ecc71; color: white; }
+    .status-rejected { background-color: #e74c3c; color: white; }
+    .status-completed { background-color: #3498db; color: white; }
+    .card-footer {
+        margin-top: 25px;
+        padding-top: 15px;
+        border-top: 1px solid #eee;
+        display: flex;
+        gap: 10px;
+    }
+    .edit-btn, .delete-btn {
+        padding: 8px 15px;
+        border-radius: 5px;
+        color: white;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .edit-btn { background-color: #f39c12; }
+    .delete-btn { background-color: #e74c3c; }
+</style>
+
+<div class="detail-container">
+    <div class="header-section">
+        <h2><i class="fas fa-hand-holding-medical"></i> Request Details</h2>
+        <a href="{% url 'bloodrequest_list' %}" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back to List
+        </a>
+    </div>
+
+    <div class="detail-card">
+        <div class="detail-row">
+            <div class="detail-label">Recipient:</div>
+            <div class="detail-value">{{ request.recipient.full_name }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Blood Group:</div>
+            <div class="detail-value">{{ request.blood_group }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Units Required:</div>
+            <div class="detail-value">{{ request.units_required }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Status:</div>
+            <div class="detail-value">
+                <span class="status-badge status-{{ request.status|lower }}">{{ request.status }}</span>
+            </div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Request Date:</div>
+            <div class="detail-value">{{ request.request_date }}</div>
+        </div>
+        {% if request.approved_by %}
+        <div class="detail-row">
+            <div class="detail-label">Approved By:</div>
+            <div class="detail-value">{{ request.approved_by.username }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Approved Date:</div>
+            <div class="detail-value">{{ request.approved_date }}</div>
+        </div>
+        {% endif %}
+        
+        <div class="card-footer">
+            <a href="{% url 'bloodrequest_update' request.pk %}" class="edit-btn">
+                <i class="fas fa-edit"></i> Edit
+            </a>
+            <a href="{% url 'bloodrequest_delete' request.pk %}" class="delete-btn">
+                <i class="fas fa-trash"></i> Delete
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

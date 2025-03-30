@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+    .doctor-container {
+        max-width: 1200px;
+        margin: 30px auto;
+        padding: 0 15px;
+    }
+    .header-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    .header-section h2 {
+        color: #9f0909;
+        font-size: 1.8rem;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .add-btn {
+        background-color: #9f0909;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s;
+    }
+    .add-btn:hover {
+        background-color: #7a0707;
+    }
+    .doctor-table {
+        width: 100%;
+        border-collapse: collapse;
+        box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+    .doctor-table th {
+        background-color: #9f0909;
+        color: white;
+        padding: 12px 15px;
+        text-align: left;
+    }
+    .doctor-table td {
+        padding: 12px 15px;
+        border-bottom: 1px solid #eee;
+    }
+    .doctor-table tr:hover {
+        background-color: #f9f9f9;
+    }
+    .profile-img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #9f0909;
+    }
+    .status-verified {
+        color: #2ecc71;
+        font-weight: bold;
+    }
+    .status-pending {
+        color: #f39c12;
+        font-weight: bold;
+    }
+    .action-btns {
+        display: flex;
+        gap: 8px;
+    }
+    .view-btn, .edit-btn, .delete-btn {
+        padding: 6px 10px;
+        border-radius: 4px;
+        color: white;
+        text-decoration: none;
+        font-size: 0.85rem;
+    }
+    .view-btn { background-color: #3498db; }
+    .edit-btn { background-color: #f39c12; }
+    .delete-btn { background-color: #e74c3c; }
+    .no-doctors {
+        text-align: center;
+        padding: 20px;
+        color: #666;
+    }
+</style>
+
+<div class="doctor-container">
+    <div class="header-section">
+        <h2><i class="fas fa-user-md"></i> Doctors</h2>
+        <a href="{% url 'doctor_create' %}" class="add-btn">
+            <i class="fas fa-plus"></i> Add Doctor
+        </a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="doctor-table">
+            <thead>
+                <tr>
+                    <th>Photo</th>
+                    <th>Name</th>
+                    <th>Specialization</th>
+                    <th>Hospital</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for doctor in doctors %}
+                <tr>
+                    <td>
+                        {% if doctor.imageURL %}
+                            <img src="{{ doctor.imageURL }}" alt="{{ doctor.full_name }}" class="profile-img">
+                        {% else %}
+                            <img src="{% static 'images/profile.jpg' %}" alt="Default Profile" class="profile-img">
+                        {% endif %}
+                    </td>
+                    
+                    <td>Dr. {{ doctor.full_name }}</td>
+                    <td>{{ doctor.specialization }}</td>
+                    <td>{{ doctor.hospital }}</td>
+                    <td class="status-{% if doctor.is_verified %}verified{% else %}pending{% endif %}">
+                        {% if doctor.is_verified %}Verified{% else %}Pending{% endif %}
+                    </td>
+                    <td>
+                        <div class="action-btns">
+                            <a href="{% url 'doctor_detail' doctor.pk %}" class="view-btn">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <a href="{% url 'doctor_update' doctor.pk %}" class="edit-btn">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="{% url 'doctor_delete' doctor.pk %}" class="delete-btn">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="no-doctors">No doctors found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

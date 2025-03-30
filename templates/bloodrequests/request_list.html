@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .request-container {
+        max-width: 1200px;
+        margin: 30px auto;
+        padding: 0 15px;
+    }
+    .header-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    .header-section h2 {
+        color: #9f0909;
+        font-size: 1.8rem;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .add-btn {
+        background-color: #9f0909;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s;
+    }
+    .add-btn:hover {
+        background-color: #7a0707;
+    }
+    .request-table {
+        width: 100%;
+        border-collapse: collapse;
+        box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+    .request-table th {
+        background-color: #9f0909;
+        color: white;
+        padding: 12px 15px;
+        text-align: left;
+    }
+    .request-table td {
+        padding: 12px 15px;
+        border-bottom: 1px solid #eee;
+    }
+    .request-table tr:hover {
+        background-color: #f9f9f9;
+    }
+    .status-pending { color: #f39c12; font-weight: bold; }
+    .status-approved { color: #2ecc71; font-weight: bold; }
+    .status-rejected { color: #e74c3c; font-weight: bold; }
+    .status-completed { color: #3498db; font-weight: bold; }
+    .action-btns {
+        display: flex;
+        gap: 8px;
+    }
+    .view-btn, .edit-btn, .delete-btn {
+        padding: 6px 10px;
+        border-radius: 4px;
+        color: white;
+        text-decoration: none;
+        font-size: 0.85rem;
+    }
+    .view-btn { background-color: #3498db; }
+    .edit-btn { background-color: #f39c12; }
+    .delete-btn { background-color: #e74c3c; }
+    .no-requests {
+        text-align: center;
+        padding: 20px;
+        color: #666;
+    }
+</style>
+
+<div class="request-container">
+    <div class="header-section">
+        <h2><i class="fas fa-hand-holding-medical"></i> Blood Requests</h2>
+        <a href="{% url 'bloodrequest_create' %}" class="add-btn">
+            <i class="fas fa-plus"></i> Add Request
+        </a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="request-table">
+            <thead>
+                <tr>
+                    <th>Recipient</th>
+                    <th>Blood Group</th>
+                    <th>Units</th>
+                    <th>Status</th>
+                    <th>Request Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for request in requests %}
+                <tr>
+                    <td>{{ request.recipient.full_name }}</td>
+                    <td>{{ request.blood_group }}</td>
+                    <td>{{ request.units_required }}</td>
+                    <td class="status-{{ request.status|lower }}">{{ request.status }}</td>
+                    <td>{{ request.request_date }}</td>
+                    <td>
+                        <div class="action-btns">
+                            <a href="{% url 'bloodrequest_detail' request.pk %}" class="view-btn">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <a href="{% url 'bloodrequest_update' request.pk %}" class="edit-btn">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="{% url 'bloodrequest_delete' request.pk %}" class="delete-btn">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="no-requests">No blood requests found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

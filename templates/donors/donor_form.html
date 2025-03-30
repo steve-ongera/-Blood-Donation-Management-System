@@ -1,0 +1,269 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+    <link rel="stylesheet" href="{% static 'css/edit_donor.css' %}">
+
+   
+
+    <div class="container">
+        <h1 class="page-title">{% if form.instance.id %}Edit Donor Profile{% else %}Register New Donor{% endif %}</h1>
+        
+        <form method="post" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            
+            <div class="form-card">
+                <div class="form-header">
+                    <h2 class="form-title">Personal Information</h2>
+                    <p class="form-subtitle">Basic details about the donor</p>
+                </div>
+                
+                <div class="form-body">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="{{ form.username.id_for_label }}" class="form-label required">Username</label>
+                            {{ form.username }}
+                            {% if form.username.errors %}
+                                <div class="invalid-feedback">{{ form.username.errors }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="{{ form.full_name.id_for_label }}" class="form-label required">Full Name</label>
+                            {{ form.full_name }}
+                            {% if form.full_name.errors %}
+                                <div class="invalid-feedback">{{ form.full_name.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="{{ form.date_of_birth.id_for_label }}" class="form-label required">Date of Birth</label>
+                            {{ form.date_of_birth }}
+                            {% if form.date_of_birth.errors %}
+                                <div class="invalid-feedback">{{ form.date_of_birth.errors }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="{{ form.gender.id_for_label }}" class="form-label required">Gender</label>
+                            {{ form.gender }}
+                            {% if form.gender.errors %}
+                                <div class="invalid-feedback">{{ form.gender.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="{{ form.blood_group.id_for_label }}" class="form-label required">Blood Group</label>
+                            {{ form.blood_group }}
+                            {% if form.blood_group.errors %}
+                                <div class="invalid-feedback">{{ form.blood_group.errors }}</div>
+                            {% endif %}
+                            <small class="form-text">Select your blood group carefully</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="{{ form.last_donation_date.id_for_label }}" class="form-label">Last Donation Date</label>
+                            {{ form.last_donation_date }}
+                            {% if form.last_donation_date.errors %}
+                                <div class="invalid-feedback">{{ form.last_donation_date.errors }}</div>
+                            {% endif %}
+                            <small class="form-text">Leave blank if never donated before</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-card">
+                <div class="form-header">
+                    <h2 class="form-title">Contact Information</h2>
+                    <p class="form-subtitle">How to reach the donor</p>
+                </div>
+                
+                <div class="form-body">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="{{ form.phone_number.id_for_label }}" class="form-label required">Phone Number</label>
+                            {{ form.phone_number }}
+                            {% if form.phone_number.errors %}
+                                <div class="invalid-feedback">{{ form.phone_number.errors }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="{{ form.email.id_for_label }}" class="form-label required">Email Address</label>
+                            {{ form.email }}
+                            {% if form.email.errors %}
+                                <div class="invalid-feedback">{{ form.email.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group form-full-row">
+                            <label for="{{ form.address.id_for_label }}" class="form-label required">Address</label>
+                            {{ form.address }}
+                            {% if form.address.errors %}
+                                <div class="invalid-feedback">{{ form.address.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="{{ form.city.id_for_label }}" class="form-label required">City</label>
+                            {{ form.city }}
+                            {% if form.city.errors %}
+                                <div class="invalid-feedback">{{ form.city.errors }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="{{ form.state.id_for_label }}" class="form-label required">State</label>
+                            {{ form.state }}
+                            {% if form.state.errors %}
+                                <div class="invalid-feedback">{{ form.state.errors }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="{{ form.zip_code.id_for_label }}" class="form-label required">ZIP Code</label>
+                            {{ form.zip_code }}
+                            {% if form.zip_code.errors %}
+                                <div class="invalid-feedback">{{ form.zip_code.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-card">
+                <div class="form-header">
+                    <h2 class="form-title">Additional Information</h2>
+                    <p class="form-subtitle">Documents and availability</p>
+                </div>
+                
+                <div class="form-body">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="{{ form.profile_picture.id_for_label }}" class="form-label">Profile Picture</label>
+                            <div class="file-upload">
+                                {{ form.profile_picture }}
+                                {% if form.profile_picture.errors %}
+                                    <div class="invalid-feedback">{{ form.profile_picture.errors }}</div>
+                                {% endif %}
+                            </div>
+                            {% if form.instance.profile_picture %}
+                            <div class="file-preview">
+                                <img src="{{ form.instance.profile_picture.url }}" alt="Current profile picture" class="preview-img">
+                                <span>Current profile picture</span>
+                            </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="{{ form.health_report.id_for_label }}" class="form-label">Health Report</label>
+                            <div class="file-upload">
+                                {{ form.health_report }}
+                                {% if form.health_report.errors %}
+                                    <div class="invalid-feedback">{{ form.health_report.errors }}</div>
+                                {% endif %}
+                                <small class="form-text">PDF or image file (max 5MB)</small>
+                            </div>
+                            {% if form.instance.health_report %}
+                            <div class="file-preview">
+                                <div class="preview-file">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M14 2H6C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M14 2V8H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M16 13H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M16 17H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M10 9H9H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    Current health report
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="form-check">
+                        {{ form.is_available }}
+                        <label for="{{ form.is_available.id_for_label }}" class="form-check-label">Available for donation</label>
+                        {% if form.is_available.errors %}
+                            <div class="invalid-feedback">{{ form.is_available.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <a href="{% url 'donor_list' %}" class="btn btn-outline">Cancel</a>
+                    <button type="submit" class="btn btn-primary">
+                        {% if form.instance.id %}Update{% else %}Register{% endif %} Donor
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Simple file preview script
+        document.addEventListener('DOMContentLoaded', function() {
+            const profileInput = document.getElementById('{{ form.profile_picture.id_for_label }}');
+            const healthInput = document.getElementById('{{ form.health_report.id_for_label }}');
+            
+            profileInput.addEventListener('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    const existingPreview = this.parentElement.nextElementSibling;
+                    if (existingPreview && existingPreview.classList.contains('file-preview')) {
+                        existingPreview.remove();
+                    }
+                    
+                    const preview = document.createElement('div');
+                    preview.className = 'file-preview';
+                    
+                    const previewText = document.createElement('span');
+                    previewText.textContent = file.name;
+                    
+                    preview.appendChild(previewText);
+                    this.parentElement.after(preview);
+                }
+            });
+            
+            healthInput.addEventListener('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    const existingPreview = this.parentElement.nextElementSibling;
+                    if (existingPreview && existingPreview.classList.contains('file-preview')) {
+                        existingPreview.remove();
+                    }
+                    
+                    const preview = document.createElement('div');
+                    preview.className = 'file-preview';
+                    
+                    const previewFile = document.createElement('div');
+                    previewFile.className = 'preview-file';
+                    previewFile.innerHTML = `
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14 2H6C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M14 2V8H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M16 13H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M16 17H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M10 9H9H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    `;
+                    previewFile.innerHTML += file.name;
+                    
+                    preview.appendChild(previewFile);
+                    this.parentElement.after(preview);
+                }
+            });
+        });
+    </script>
+
+{% endblock %}

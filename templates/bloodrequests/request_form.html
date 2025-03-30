@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .form-container {
+        max-width: 800px;
+        margin: 30px auto;
+        padding: 0 15px;
+    }
+    .header-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    .header-section h2 {
+        color: #9f0909;
+        font-size: 1.8rem;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .cancel-btn {
+        background-color: #6c757d;
+        color: white;
+        padding: 8px 15px;
+        border-radius: 5px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .form-card {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        padding: 25px;
+    }
+    .form-row {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+    .form-group {
+        flex: 1;
+        margin-bottom: 15px;
+    }
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+        color: #555;
+    }
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+    }
+    .form-control:focus {
+        border-color: #9f0909;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(159,9,9,0.1);
+    }
+    select.form-control {
+        appearance: none;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%239f0909'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        background-size: 15px;
+    }
+    .save-btn {
+        background-color: #9f0909;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s;
+    }
+    .save-btn:hover {
+        background-color: #7a0707;
+    }
+    .error-message {
+        color: #e74c3c;
+        font-size: 0.85rem;
+        margin-top: 5px;
+    }
+</style>
+
+
+<div class="form-container">
+    <div class="header-section">
+        <h2><i class="fas fa-hand-holding-medical"></i> {{ title }}</h2>
+        <a href="{% url 'bloodrequest_list' %}" class="cancel-btn">
+            <i class="fas fa-times"></i> Cancel
+        </a>
+    </div>
+
+    <div class="form-card">
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group">
+                    <label>{{ form.recipient.label }}</label>
+                    {{ form.recipient }}
+                    {% if form.recipient.errors %}
+                        <div class="error-message">{{ form.recipient.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label>{{ form.blood_group.label }}</label>
+                    {{ form.blood_group }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>{{ form.units_required.label }}</label>
+                    {{ form.units_required }}
+                    {% if form.units_required.errors %}
+                        <div class="error-message">{{ form.units_required.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label>{{ form.status.label }}</label>
+                    {{ form.status }}
+                </div>
+            </div>
+            <button type="submit" class="save-btn">
+                <i class="fas fa-save"></i> Save
+            </button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
